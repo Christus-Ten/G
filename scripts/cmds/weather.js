@@ -30,7 +30,8 @@ module.exports = {
 			vi: "xem dự báo thời tiết hiện tại và 5 ngày sau",
 			en: "view the current and next 5 days weather forecast"
 		},
-		category: "other",,
+		category: "other",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "{pn} <địa điểm>",

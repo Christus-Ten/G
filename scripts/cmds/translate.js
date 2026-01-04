@@ -13,7 +13,8 @@ module.exports = {
 			vi: "Dịch văn bản sang ngôn ngữ mong muốn",
 			en: "Translate text to the desired language"
 		},
-		category: "utility",,
+		category: "utility",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} <văn bản>: Dịch văn bản sang ngôn ngữ của box chat bạn hoặc ngôn ngữ mặc định của bot"

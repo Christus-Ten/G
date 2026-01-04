@@ -9,7 +9,8 @@ module.exports = {
 		countDown: 5,
 		role: 0,
 		description: "Thay đổi dấu lệnh của bot trong box chat của bạn hoặc cả hệ thống bot (chỉ admin bot)",
-		category: "config",,
+		category: "config",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} <new prefix>: thay đổi prefix mới trong box chat của bạn"

@@ -10,7 +10,8 @@ module.exports = {
 			vi: "Bỏ qua lệnh trong adminonly (khi bật adminonly, các lệnh được thêm từ lệnh này người dùng vẫn có thể sử dụng)",
 			en: "Ignore command in adminonly (when turn on adminonly, user can use command added from this command)"
 		},
-		category: "owner",,
+		category: "owner",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} add <commandName>: Thêm lệnh vào danh sách bỏ qua"

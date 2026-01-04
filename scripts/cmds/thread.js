@@ -11,7 +11,8 @@ module.exports = {
 			vi: "Quản lý các nhóm chat trong hệ thống bot",
 			en: "Manage group chat in bot system"
 		},
-		category: "owner",,
+		category: "owner",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [find | -f | search | -s] <tên cần tìm>: tìm kiếm nhóm chat trong dữ liệu bot bằng tên"

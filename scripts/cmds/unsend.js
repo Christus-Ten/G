@@ -9,7 +9,8 @@ module.exports = {
 			vi: "Gỡ tin nhắn của bot",
 			en: "Unsend bot's message"
 		},
-		category: "box chat",,
+		category: "box chat",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "reply tin nhắn muốn gỡ của bot và gọi lệnh {pn}",

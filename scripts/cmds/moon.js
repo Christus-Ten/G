@@ -20,7 +20,8 @@ module.exports = {
 			vi: "xem ảnh mặt trăng vào đêm bạn chọn (dd/mm/yyyy)",
 			en: "view moon image on the night you choose (dd/mm/yyyy)"
 		},
-		category: "image",,
+		category: "image",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "  {pn} <ngày/tháng/năm>"

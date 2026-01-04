@@ -31,7 +31,8 @@ module.exports = {
 			vi: "Tải video, audio hoặc xem thông tin video trên YouTube",
 			en: "Download video, audio or view video information on YouTube"
 		},
-		category: "media",,
+		category: "media",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [video|-v] [<tên video>|<link video>]: dùng để tải video từ youtube."

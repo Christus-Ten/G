@@ -30,7 +30,8 @@ module.exports = {
 			vi: "Game đoán số",
 			en: "Guess number game"
 		},
-		category: "game",,
+		category: "game",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "  {pn} [4 | 5 | 6] [single | multi]: tạo một bàn chơi mới, với:"

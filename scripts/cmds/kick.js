@@ -9,7 +9,8 @@ module.exports = {
 			vi: "Kick thành viên khỏi box chat",
 			en: "Kick member out of chat box"
 		},
-		category: "box chat",,
+		category: "box chat",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} @tags: dùng để kick những người được tag",

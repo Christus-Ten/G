@@ -20,7 +20,8 @@ module.exports = {
 			vi: "Đổi biệt danh của tất cả thành viên trong nhóm chat hoặc những thành viên được tag theo một định dạng",
 			en: "Change nickname of all members in chat or members tagged by a format"
 		},
-		category: "box chat",,
+		category: "box chat",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: {

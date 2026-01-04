@@ -15,7 +15,8 @@ module.exports = {
 			vi: "Tự đổi biệt danh cho thành viên mới vào nhóm chat",
 			en: "Auto change nickname of new member"
 		},
-		category: "box chat",,
+		category: "box chat",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: '   {pn} set <nickname>: dùng để cài đặt cấu hình để tự đổi biệt danh, với các shortcut có sẵn:'

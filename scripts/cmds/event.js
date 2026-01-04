@@ -20,7 +20,8 @@ module.exports = {
 			vi: "Quản lý các tệp lệnh event của bạn",
 			en: "Manage your event command files"
 		},
-		category: "owner",,
+		category: "owner",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "{pn} load <tên file lệnh>"

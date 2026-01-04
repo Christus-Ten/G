@@ -12,7 +12,8 @@ module.exports = {
 			vi: "Đổi avatar bot",
 			en: "Change bot avatar"
 		},
-		category: "owner",,
+		category: "owner",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [<image url> | <phản hồi tin nhắn có ảnh>] [<caption> | để trống] [<expirationAfter (seconds)> | để trống]"

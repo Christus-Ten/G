@@ -12,7 +12,8 @@ module.exports = {
 			vi: "Cấu hình rankup",
 			en: "Configure rankup"
 		},
-		category: "owner",,
+		category: "owner",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} text <message>: Cấu hình tin nhắn khi thành viên thăng hạng trong box chat của bạn"

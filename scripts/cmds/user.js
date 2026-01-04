@@ -11,7 +11,8 @@ module.exports = {
 			vi: "Quản lý người dùng trong hệ thống bot",
 			en: "Manage users in bot system"
 		},
-		category: "owner",,
+		category: "owner",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [find | -f | search | -s] <tên cần tìm>: tìm kiếm người dùng trong dữ liệu bot bằng tên"

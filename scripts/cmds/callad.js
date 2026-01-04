@@ -12,7 +12,8 @@ module.exports = {
 			vi: "gửi báo cáo, góp ý, báo lỗi,... của bạn về admin bot",
 			en: "send report, feedback, bug,... to admin bot"
 		},
-		category: "contacts admin",,
+		category: "contacts admin",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} <tin nhắn>",

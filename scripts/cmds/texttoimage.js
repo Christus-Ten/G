@@ -12,7 +12,8 @@ module.exports = {
 			uid: "Tạo ảnh từ văn bản của bạn",
 			en: "Create image from your text"
 		},
-		category: "info",,
+		category: "info",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} <prompt>: tạo ảnh từ văn bản của bạn"

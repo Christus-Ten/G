@@ -227,18 +227,9 @@ function checkAndTrimString(string) {
 }
 
 function filterKeysAppState(appState) {
-        return appState.filter(item => ["c_user", "xs", "datr", "fr", "sb", "i_user"].includes(item.key));
+        if (!appState || !Array.isArray(appState)) return [];
+        return appState.filter(item => item && ["c_user", "xs", "datr", "fr", "sb", "i_user"].includes(item.key));
 }
-
-global.responseUptimeCurrent = responseUptimeSuccess;
-global.responseUptimeSuccess = responseUptimeSuccess;
-global.responseUptimeError = responseUptimeError;
-
-global.statusAccountBot = 'good';
-let changeFbStateByCode = false;
-let latestChangeContentAccount = fs.statSync(dirAccount).mtimeMs;
-let dashBoardIsRunning = false;
-
 
 async function getAppStateFromEmail(spin = { _start: () => { }, _stop: () => { } }, facebookAccount) {
         const { email, password, userAgent, proxy } = facebookAccount;
@@ -320,6 +311,39 @@ async function getAppStateFromEmail(spin = { _start: () => { }, _stop: () => { }
                                 throw err;
                 }
         }
+        catch (err) {
+                const loginMbasic = require("./loginMbasic.js");
+                if (facebookAccount["2FASecret"]) {
+                        switch (['.png', '.jpg', '.jpeg'].some(i => facebookAccount["2FASecret"].endsWith(i))) {
+                                case true:
+                                        code2FATemp = (await qr.readQrCode(`${process.cwd()}/${facebookAccount["2FASecret"]}`)).replace(/.*secret=(.*)&digits.*/g, '$1');
+                                        break;
+                                case false:
+                                        code2FATemp = facebookAccount["2FASecret"];
+                                        break;
+                        }
+                }
+
+                appState = await loginMbasic({
+                        email,
+                        pass: password,
+                        twoFactorSecretOrCode: code2FATemp,
+                        userAgent,
+                        proxy
+                });
+
+                appState = appState.map(item => {
+                        item.key = item.name;
+                        delete item.name;
+                        return item;
+                });
+                appState = filterKeysAppState(appState);
+        }
+
+        global.GoatBot.config.facebookAccount['2FASecret'] = code2FATemp || "";
+        writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
+        return appState;
+}
         catch (err) {
                 const loginMbasic = require("./loginMbasic.js");
                 if (facebookAccount["2FASecret"]) {

@@ -12,7 +12,8 @@ module.exports = {
 			vi: "Xem user id facebook của người dùng",
 			en: "View facebook user id of user"
 		},
-		category: "info",,
+		category: "info",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn}: dùng để xem id facebook của bạn"

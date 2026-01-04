@@ -15,7 +15,8 @@ module.exports = {
 			vi: "Thiết kế thẻ rank theo ý bạn",
 			en: "Design rank card by your own"
 		},
-		category: "rank",,
+		category: "rank",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: {

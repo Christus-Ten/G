@@ -10,7 +10,8 @@ module.exports = {
 			vi: "xem số tiền hiện có của bạn hoặc người được tag",
 			en: "view your money or the money of the tagged person"
 		},
-		category: "economy",,
+		category: "economy",
+                nixPrefix: false,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn}: xem số tiền của bạn"
