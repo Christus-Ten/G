@@ -13,6 +13,7 @@ module.exports = {
 			en: "Edit content/turn on/off leave message when member leave your group chat"
 		},
 		category: "custom",
+		nixPrefix: false,
 		guide: {
 			vi: {
 				body: "   {pn} on: Bật tin nhắn tạm biệt"

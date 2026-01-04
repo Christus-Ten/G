@@ -14,6 +14,7 @@ module.exports = {
 			en: "Turn on/off level up notification"
 		},
 		category: "rank",
+		nixPrefix: false,
 		guide: {
 			en: "{pn} [on | off]"
 		},

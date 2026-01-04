@@ -31,6 +31,7 @@ module.exports = {
 			en: "view the current and next 5 days weather forecast"
 		},
 		category: "other",
+		nixPrefix: false,
 		guide: {
 			vi: "{pn} <địa điểm>",
 			en: "{pn} <location>"

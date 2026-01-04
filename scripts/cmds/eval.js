@@ -12,6 +12,7 @@ module.exports = {
 			en: "Test code quickly"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			vi: "{pn} <đoạn code cần test>",
 			en: "{pn} <code to test>"

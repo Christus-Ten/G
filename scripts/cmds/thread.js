@@ -12,6 +12,7 @@ module.exports = {
 			en: "Manage group chat in bot system"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [find | -f | search | -s] <tên cần tìm>: tìm kiếm nhóm chat trong dữ liệu bot bằng tên"
 				+ "\n   {pn} [find | -f | search | -s] [-j | joined] <tên cần tìm>: tìm kiếm nhóm chat trong dữ liệu mà bot còn tham gia bằng tên"

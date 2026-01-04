@@ -11,6 +11,7 @@ module.exports = {
 			en: "Ignore command in adminonly (when turn on adminonly, user can use command added from this command)"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} add <commandName>: Thêm lệnh vào danh sách bỏ qua"
 				+ "\n   {pn} del <commandName>: Xóa lệnh khỏi danh sách bỏ qua"

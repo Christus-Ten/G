@@ -12,6 +12,7 @@ module.exports = {
 			en: "Receive daily gift"
 		},
 		category: "game",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn}: Nhận quà hàng ngày"
 				+ "\n   {pn} info: Xem thông tin quà hàng ngày",

@@ -13,6 +13,7 @@ module.exports = {
 			en: "Change bot avatar"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [<image url> | <phản hồi tin nhắn có ảnh>] [<caption> | để trống] [<expirationAfter (seconds)> | để trống]"
 				+ "\nPhản hồi 1 tin nhắn có chứa ảnh với nội dung: {pn}"

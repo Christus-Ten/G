@@ -13,6 +13,7 @@ module.exports = {
 			en: "Send notification from admin to all box"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			en: "{pn} <tin nhắn>"
 		},

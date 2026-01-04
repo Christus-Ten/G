@@ -30,6 +30,7 @@ module.exports = {
 			en: "View your level or the level of the tagged person. You can tag many people"
 		},
 		category: "rank",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [để trống | @tags]",
 			en: "   {pn} [empty | @tags]"

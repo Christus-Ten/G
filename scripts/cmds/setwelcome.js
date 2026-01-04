@@ -13,6 +13,7 @@ module.exports = {
 			en: "Edit welcome message content when new member join your group chat"
 		},
 		category: "custom",
+		nixPrefix: false,
 		guide: {
 			vi: {
 				body: "   {pn} text [<nội dung> | reset]: chỉnh sửa nội dung văn bản hoặc reset về mặc định, với những shortcut có sẵn:"

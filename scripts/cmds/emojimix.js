@@ -18,6 +18,7 @@ module.exports = {
 				+ "\n   Example:  {pn} 🤣 🥰"
 		},
 		category: "fun"
+		nixPrefix: false,
 	},
 
 	langs: {

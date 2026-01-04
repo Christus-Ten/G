@@ -12,6 +12,7 @@ module.exports = {
 			en: "Backup data of bot (threads, users, dashboard, globalData)"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			en: "   {pn}"
 		}

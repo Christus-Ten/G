@@ -16,6 +16,7 @@ module.exports = {
 			en: "Design rank card by your own"
 		},
 		category: "rank",
+		nixPrefix: false,
 		guide: {
 			vi: {
 				body: "   {pn} [maincolor | subcolor | linecolor | expbarcolor | progresscolor | alphasubcolor | textcolor | namecolor | expcolor | rankcolor | levelcolor | reset] <value>"

@@ -13,6 +13,7 @@ module.exports = {
 			en: "Synchronize data from json to sqlite"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} <thread | user | dashboard | global | all>: Sẽ đồng bộ dữ liệu từ data json được lưu trong thư mục database/data sang sqlite\n\n   Lưu ý: Nếu dữ liệu đã tồn tại trong sqlite thì sẽ được cập nhật lại",
 			en: "   {pn} <thread | user | dashboard | global | all>: Will synchronize data from json data stored in the database/data folder to sqlite\n\n   Note: If the data already exists in sqlite, it will be updated"

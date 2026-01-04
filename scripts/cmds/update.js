@@ -14,6 +14,7 @@ module.exports = {
 			vi: "Kiểm tra và cài đặt phiên bản mới nhất của chatbot trên GitHub."
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			en: "   {pn}",
 			vi: "   {pn}"

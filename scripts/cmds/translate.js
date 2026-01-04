@@ -14,6 +14,7 @@ module.exports = {
 			en: "Translate text to the desired language"
 		},
 		category: "utility",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} <văn bản>: Dịch văn bản sang ngôn ngữ của box chat bạn hoặc ngôn ngữ mặc định của bot"
 				+ "\n   {pn} <văn bản> -> <ISO 639-1>: Dịch văn bản sang ngôn ngữ mong muốn"

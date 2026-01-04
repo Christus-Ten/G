@@ -15,6 +15,7 @@ module.exports = {
 			en: "turn on/off only admin can use bot"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [on | off]: bật/tắt chế độ chỉ admin mới có thể sử dụng bot"
 				+ "\n   {pn} noti [on | off]: bật/tắt thông báo khi người dùng không phải là admin sử dụng bot",

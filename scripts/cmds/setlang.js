@@ -12,6 +12,7 @@ module.exports = {
 			en: "Set default language of bot for current chat or all chats"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} <language code ISO 639-1"
 				+ "\n   Ví dụ:"

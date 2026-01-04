@@ -13,6 +13,7 @@ module.exports = {
 			en: "Get current fbstate"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			en: "   {pn}: get fbstate (appState)\n"
 				+ "   {pn} [cookies|cookie|c]: get fbstate with cookies format\n"

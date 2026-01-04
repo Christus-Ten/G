@@ -13,6 +13,7 @@ module.exports = {
 			en: "Add user to box chat of you"
 		},
 		category: "box chat",
+		nixPrefix: false,
 		guide: {
 			en: "   {pn} [link profile | uid]"
 		}

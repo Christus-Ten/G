@@ -13,6 +13,7 @@ module.exports = {
 			en: "play game catch the word"
 		},
 		category: "game",
+		nixPrefix: false,
 		guide: {
 			en: "{pn}"
 		},

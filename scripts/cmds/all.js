@@ -10,6 +10,7 @@ module.exports = {
 			en: "Tag all members in your group chat"
 		},
 		category: "box chat",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [nội dung | để trống]",
 			en: "   {pn} [content | empty]"

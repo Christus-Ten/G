@@ -12,6 +12,7 @@ module.exports = {
 			en: "warn member in group, if they have 3 warns, they will be banned"
 		},
 		category: "box chat",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} @tag <lý do>: dùng cảnh cáo thành viên"
 				+ "\n   {pn} list: xem danh sách những thành viên đã bị cảnh cáo"

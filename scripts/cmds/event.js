@@ -21,6 +21,7 @@ module.exports = {
 			en: "Manage your event command files"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			vi: "{pn} load <tên file lệnh>"
 				+ "\n{pn} loadAll"

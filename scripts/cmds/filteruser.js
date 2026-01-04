@@ -14,6 +14,7 @@ module.exports = {
 			en: "filter group members by number of messages or locked account"
 		},
 		category: "box chat",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [<số tin nhắn> | die]",
 			en: "   {pn} [<number of messages> | die]"

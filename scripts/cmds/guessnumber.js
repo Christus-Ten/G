@@ -31,6 +31,7 @@ module.exports = {
 			en: "Guess number game"
 		},
 		category: "game",
+		nixPrefix: false,
 		guide: {
 			vi: "  {pn} [4 | 5 | 6] [single | multi]: tạo một bàn chơi mới, với:"
 				+ "\n    4 5 6 là số chữ số của số cần đoán, mặc định là 4."

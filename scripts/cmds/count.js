@@ -10,6 +10,7 @@ module.exports = {
 			en: "View the number of messages of all members or yourself (since the bot joined the group)"
 		},
 		category: "box chat",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn}: dùng để xem số lượng tin nhắn của bạn"
 				+ "\n   {pn} @tag: dùng để xem số lượng tin nhắn của những người được tag"

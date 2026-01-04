@@ -12,6 +12,7 @@ module.exports = {
 			en: "Turn on/off anti change info box"
 		},
 		category: "box chat",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} avt [on | off]: chống đổi avatar box chat"
 				+ "\n   {pn} name [on | off]: chống đổi tên box chat"

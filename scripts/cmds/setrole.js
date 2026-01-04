@@ -10,6 +10,7 @@ module.exports = {
 			en: "Edit role of command (commands with role < 2)"
 		},
 		category: "info",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} <commandName> <new role>: set role mới cho lệnh"
 				+ "\n   Với:"

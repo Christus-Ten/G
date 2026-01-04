@@ -10,6 +10,7 @@ module.exports = {
 			en: "View threadID of your group chat"
 		},
 		category: "info",
+		nixPrefix: false,
 		guide: {
 			en: "{pn}"
 		}

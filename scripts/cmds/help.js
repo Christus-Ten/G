@@ -22,6 +22,7 @@ module.exports = {
 			en: "View command usage"
 		},
 		category: "info",
+		nixPrefix: true,
 		guide: {
 			vi: "   {pn} [để trống | <số trang> | <tên lệnh>]"
 				+ "\n   {pn} <command name> [-u | usage | -g | guide]: chỉ hiển thị phần hướng dẫn sử dụng lệnh"
@@ -250,6 +251,7 @@ module.exports = {
 					else
 						arrayInfo.push({
 							category: value.config.category.toLowerCase(),
+		nixPrefix: true,
 							names: [value.config.name]
 						});
 				}

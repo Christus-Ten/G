@@ -21,6 +21,7 @@ module.exports = {
 			en: "View Hubble images"
 		},
 		category: "owner",
+		nixPrefix: false,
 		guide: {
 			en: "{pn} <date (mm-dd)>"
 		}

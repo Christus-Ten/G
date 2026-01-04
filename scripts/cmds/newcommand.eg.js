@@ -30,6 +30,7 @@ module.exports = {
 			en: "this is long description of command"
 		}, // Long description of command
 		category: "categoryName", // Category of command
+		nixPrefix: false,
 		guide: {
 			vi: "đây là hướng dẫn sử dụng của lệnh",
 			en: "this is guide of command"

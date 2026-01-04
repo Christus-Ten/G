@@ -10,6 +10,7 @@ module.exports = {
 			en: "Sort help list"
 		},
 		category: "image",
+		nixPrefix: false,
 		guide: {
 			en: "{pn} [name | category]"
 		}

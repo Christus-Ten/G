@@ -13,6 +13,7 @@ module.exports = {
 			en: "send report, feedback, bug,... to admin bot"
 		},
 		category: "contacts admin",
+		nixPrefix: false,
 		guide: {
 			vi: "   {pn} <tin nhắn>",
 			en: "   {pn} <message>"

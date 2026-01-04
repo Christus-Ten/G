@@ -13,6 +13,7 @@ module.exports = {
 			en: "Search app on appstore"
 		},
 		category: "software",
+		nixPrefix: false,
 		guide: "   {pn}: <keyword>"
 			+ "\n   - Example:"
 			+ "\n   {pn} PUBG",

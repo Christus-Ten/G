@@ -21,6 +21,7 @@ module.exports = {
 			en: "view moon image on the night you choose (dd/mm/yyyy)"
 		},
 		category: "image",
+		nixPrefix: false,
 		guide: {
 			vi: "  {pn} <ngày/tháng/năm>"
 				+ "\n   {pn} <ngày/tháng/năm> <caption>",

@@ -21,6 +21,7 @@ module.exports = {
 			en: "Change nickname of all members in chat or members tagged by a format"
 		},
 		category: "box chat",
+		nixPrefix: false,
 		guide: {
 			vi: {
 				body: "   {pn} <nick name>: thay đổi biệt danh của bản thân"
