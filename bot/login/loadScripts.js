@@ -201,13 +201,6 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
                                 // —————————————— IMPORT TO GLOBALGOAT —————————————— //
                                 GoatBot[setMap].set(commandName.toLowerCase(), command);
                                 commandLoadSuccess++;
-                                // ————————————————— COMPARE COMMAND (removed in open source) ————————————————— //
-
-                                global.GoatBot[folderModules == "cmds" ? "commandFilesPath" : "eventCommandsFilesPath"].push({
-                                        // filePath: pathCommand,
-                                        filePath: path.normalize(pathCommand),
-                                        commandName: [commandName, ...validAliases]
-                                });
                         }
                         catch (error) {
                                 commandError.push({
@@ -215,8 +208,8 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
                                         error
                                 });
                         }
-                        loading.info('LOADED', `${colors.green(`${commandLoadSuccess}`)}${commandError.length ? `, ${colors.red(`${commandError.length}`)}` : ''}`);
                 }
+                loading.info('LOADED', `${colors.green(`${commandLoadSuccess}`)}${commandError.length ? `, ${colors.red(`${commandError.length}`)}` : ''}`);
                 console.log("\r");
                 if (commandError.length > 0) {
                         log.err("LOADED", getText('loadScripts', 'loadScriptsError', colors.yellow(text)));
