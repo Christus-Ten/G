@@ -1,5 +1,6 @@
 const { colors } = require('../func/colors.js');
 const moment = require("moment-timezone");
+const gradient = require("gradient-string");
 const characters = '';
 const getCurrentTime = () => colors.gray(moment().tz("Asia/Ho_Chi_Minh").format("HH:mm:ss DD/MM/YYYY"));
 
@@ -33,7 +34,7 @@ module.exports = {
                         prefix = "INFO";
                 }
                 if (message === "Starting bot...") {
-                        console.log(colors.cyanBright("Goat-bot-v2 Running 🌸"));
+                        console.log(`${gradient.pastel("Goat-bot-v2 Running 🌸")}`);
                         return;
                 }
                 console.log(`${getCurrentTime()} ${colors.greenBright(`${characters} ${prefix}:`)}`, message);
