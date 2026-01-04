@@ -539,7 +539,7 @@ async function getAppStateToLogin(loginWithEmail) {
                                                 const number = parseInt(key.name);
                                                 if (number >= 0 && number <= options.length)
                                                         currentOption = number - 1;
-                                                process.stdout.write('\033[1D'); // delete the character
+                                                process.stdout.write('\x1b[1D'); // delete the character
                                         }
                                         else if (key.name === 'enter' || key.name === 'return') {
                                                 rl.input.removeAllListeners('keypress');
@@ -549,7 +549,7 @@ async function getAppStateToLogin(loginWithEmail) {
                                                 resolve();
                                         }
                                         else {
-                                                process.stdout.write('\033[1D'); // delete the character
+                                                process.stdout.write('\x1b[1D'); // delete the character
                                         }
 
                                         clearLines(options.length);
@@ -1001,7 +1001,7 @@ async function startBot(loginWithEmail) {
                                 //      return;
                                 // }
 
-                                if (config.whiteListMode?.enable == true
+                                if (global.GoatBot.config.whiteListMode?.enable == true
                         && global.GoatBot.config.whiteListModeThread?.enable == true
                         // admin
                         && !global.GoatBot.config.adminBot.includes(event.senderID)
