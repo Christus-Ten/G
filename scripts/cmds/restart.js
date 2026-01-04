@@ -11,7 +11,7 @@ module.exports = {
 			vi: "Khởi động lại bot",
 			en: "Restart bot"
 		},
-		category: "Owner",
+		category: "Owner",,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn}: Khởi động lại bot",

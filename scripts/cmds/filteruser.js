@@ -13,7 +13,7 @@ module.exports = {
 			vi: "lọc thành viên nhóm theo số tin nhắn hoặc bị khóa acc",
 			en: "filter group members by number of messages or locked account"
 		},
-		category: "box chat",
+		category: "box chat",,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [<số tin nhắn> | die]",

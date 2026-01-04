@@ -12,7 +12,7 @@ module.exports = {
 			vi: "Lấy fbstate hiện tại",
 			en: "Get current fbstate"
 		},
-		category: "owner",
+		category: "owner",,
 		nixPrefix: false,
 		guide: {
 			en: "   {pn}: get fbstate (appState)\n"

@@ -12,7 +12,7 @@ module.exports = {
 			vi: "Cấm thành viên khỏi box chat",
 			en: "Ban user from box chat"
 		},
-		category: "box chat",
+		category: "box chat",,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [@tag|uid|link fb|reply] [<lý do cấm>|để trống nếu không có lý do]: Cấm thành viên khỏi box chat"

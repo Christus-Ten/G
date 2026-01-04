@@ -10,7 +10,7 @@ module.exports = {
 			vi: "bật/tắt chế độ chỉ quản trị của viên nhóm mới có thể sử dụng bot",
 			en: "turn on/off only admin box can use bot"
 		},
-		category: "box chat",
+		category: "box chat",,
 		nixPrefix: false,
 		guide: {
 			vi: "   {pn} [on | off]: bật/tắt chế độ chỉ quản trị viên nhóm mới có thể sử dụng bot"

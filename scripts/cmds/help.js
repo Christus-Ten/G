@@ -21,7 +21,7 @@ module.exports = {
 			vi: "Xem cách sử dụng của các lệnh",
 			en: "View command usage"
 		},
-		category: "info",
+		category: "info",,
 		nixPrefix: true,
 		guide: {
 			vi: "   {pn} [để trống | <số trang> | <tên lệnh>]"

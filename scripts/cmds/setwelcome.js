@@ -12,7 +12,7 @@ module.exports = {
 			vi: "Chỉnh sửa nội dung tin nhắn chào mừng thành viên mới tham gia vào nhóm chat của bạn",
 			en: "Edit welcome message content when new member join your group chat"
 		},
-		category: "custom",
+		category: "custom",,
 		nixPrefix: false,
 		guide: {
 			vi: {

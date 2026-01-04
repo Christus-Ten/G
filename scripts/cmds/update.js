@@ -13,7 +13,7 @@ module.exports = {
 			en: "Check for and install updates for the chatbot.",
 			vi: "Kiểm tra và cài đặt phiên bản mới nhất của chatbot trên GitHub."
 		},
-		category: "owner",
+		category: "owner",,
 		nixPrefix: false,
 		guide: {
 			en: "   {pn}",
