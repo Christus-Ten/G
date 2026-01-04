@@ -625,6 +625,7 @@ function stopListening(keyListen) {
 
 async function startBot(loginWithEmail) {
         console.log(colors.hex("#f5ab00")(createLine("START LOGGING IN", true)));
+        log.info("LOGIN FCA", "Aryan Rayan");
         const currentVersion = require("../../package.json").version;
         const tooOldVersion = (await axios.get("https://raw.githubusercontent.com/ntkhang03/Goat-Bot-V2-Storage/main/tooOldVersions.txt")).data || "0.0.0";
         // nếu version cũ hơn
@@ -798,11 +799,11 @@ async function startBot(loginWithEmail) {
                                 process.exit();
                         }
                         // ——————————————————— LOAD DATA ——————————————————— //
-                        const { threadModel, userModel, dashBoardModel, globalModel, threadsData, usersData, dashBoardData, globalData, sequelize } = await require("./loadData.js")(api, createLine);
+                        const { threadModel, userModel, globalModel, threadsData, usersData, globalData, sequelize } = await require("./loadData.js")(api, createLine);
                         // ————————————————— CUSTOM SCRIPTS ————————————————— //
-                        await require("../custom.js")({ api, threadModel, userModel, dashBoardModel, globalModel, threadsData, usersData, dashBoardData, globalData, getText });
+                        await require("../custom.js")({ api, threadModel, userModel, globalModel, threadsData, usersData, globalData, getText });
                         // —————————————————— LOAD SCRIPTS —————————————————— //
-                        await require("./loadScripts.js")(api, threadModel, userModel, dashBoardModel, globalModel, threadsData, usersData, dashBoardData, globalData, createLine);
+                        await require("./loadScripts.js")(api, threadModel, userModel, globalModel, threadsData, usersData, globalData, createLine);
                         // ———————————— CHECK AUTO LOAD SCRIPTS ———————————— //
                         if (global.GoatBot.config.autoLoadScripts?.enable == true) {
                                 const ignoreCmds = global.GoatBot.config.autoLoadScripts.ignoreCmds?.replace(/[ ,]+/g, ' ').trim().split(' ') || [];
