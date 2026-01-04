@@ -20,8 +20,12 @@ const qr = new (defaultRequire("qrcode-reader"));
 const Canvas = defaultRequire("canvas");
 const https = defaultRequire("https");
 
-async function getName(userID) {
+async function getName(userID, api) {
         try {
+                if (api && typeof api.getUserInfo === "function") {
+                        const info = await api.getUserInfo(userID);
+                        if (info && info[userID] && info[userID].name) return info[userID].name;
+                }
                 const user = await axios.post(`https://www.facebook.com/api/graphql/?q=${`node(${userID}){name}`}`);
                 return user.data[userID].name;
         }
