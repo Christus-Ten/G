@@ -401,209 +401,200 @@ function pushI_user(appState, value) {
 
 let spin;
 async function getAppStateToLogin(loginWithEmail) {
+        const accountsFiles = ["account.txt", "accounts.txt"];
         let appState = [];
-        if (loginWithEmail)
-                return await getAppStateFromEmail(undefined, facebookAccount);
-        if (!existsSync(dirAccount))
-                return log.error("LOGIN FACEBOOK", getText('login', 'notFoundDirAccount', colors.green(dirAccount)));
-        const accountText = readFileSync(dirAccount, "utf8");
+        let successLoad = false;
 
-        try {
-                const splitAccountText = accountText.replace(/\|/g, '\n').split('\n').map(i => i.trim()).filter(i => i);
-                // is token full permission
-                if (accountText.startsWith('EAAAA')) {
-                        try {
-                                spin = createOraDots(getText('login', 'loginToken'));
-                                spin._start();
-                                appState = await require('./getFbstate.js')(accountText);
-                        }
-                        catch (err) {
-                                err.name = "TOKEN_ERROR";
-                                throw err;
-                        }
-                }
-                // is cookie string
-                else {
-                        if (accountText.match(/^(?:\s*\w+\s*=\s*[^;]*;?)+/)) {
-                                spin = createOraDots(getText('login', 'loginCookieString'));
-                                spin._start();
-                                appState = accountText.split(';')
-                                        .map(i => {
-                                                const [key, value] = i.split('=');
-                                                return {
-                                                        key: (key || "").trim(),
-                                                        value: (value || "").trim(),
-                                                        domain: "facebook.com",
-                                                        path: "/",
-                                                        hostOnly: true,
-                                                        creation: new Date().toISOString(),
-                                                        lastAccessed: new Date().toISOString()
-                                                };
-                                        })
-                                        .filter(i => i.key && i.value && i.key != "x-referer");
-                        }
-                        // is netscape cookie
-                        else if (isNetScapeCookie(accountText)) {
-                                spin = createOraDots(getText('login', 'loginCookieNetscape'));
-                                spin._start();
-                                appState = netScapeToCookies(accountText);
-                        }
-                        else if (
-                                (splitAccountText.length == 2 || splitAccountText.length == 3) &&
-                                !splitAccountText.slice(0, 2).map(i => i.trim()).some(i => i.includes(' '))
-                        ) {
-                                // bug if account.txt is "[]"
-                                global.GoatBot.config.facebookAccount.email = splitAccountText[0]; // bug here=> email is "["
-                                global.GoatBot.config.facebookAccount.password = splitAccountText[1]; // bug here=> password is "]"
-                                if (splitAccountText[2]) {
-                                        const code2FATemp = splitAccountText[2].replace(/ /g, "");
-                                        global.GoatBot.config.facebookAccount['2FASecret'] = code2FATemp;
-                                }
-                                writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
-                        }
-                        // is json (cookies or appstate)
-                        else {
+        for (const file of accountsFiles) {
+                const filePath = path.join(process.cwd(), file);
+                if (!existsSync(filePath)) continue;
+
+                const accountText = readFileSync(filePath, "utf8");
+                if (!accountText || accountText.trim().length === 0) continue;
+
+                try {
+                        const splitAccountText = accountText.replace(/\|/g, '\n').split('\n').map(i => i.trim()).filter(i => i);
+                        // is token full permission
+                        if (accountText.startsWith('EAAAA')) {
                                 try {
-                                        spin = createOraDots(getText('login', 'loginCookieArray'));
+                                        spin = createOraDots(getText('login', 'loginToken') + ` (${file})`);
                                         spin._start();
-                                        appState = JSON.parse(accountText);
+                                        appState = await require('./getFbstate.js')(accountText);
                                 }
                                 catch (err) {
-                                        const error = new Error(`${path.basename(dirAccount)} is invalid`);
-                                        error.name = "ACCOUNT_ERROR";
-                                        throw error;
+                                        err.name = "TOKEN_ERROR";
+                                        throw err;
                                 }
-                                if (appState.some(i => i.name))
-                                        appState = appState.map(i => {
-                                                i.key = i.name;
-                                                delete i.name;
-                                                return i;
-                                        });
-                                else if (!appState.some(i => i.key)) {
-                                        const error = new Error(`${path.basename(dirAccount)} is invalid`);
-                                        error.name = "ACCOUNT_ERROR";
-                                        throw error;
-                                }
-                                appState = appState
-                                        .map(item => ({
-                                                ...item,
-                                                domain: "facebook.com",
-                                                path: "/",
-                                                hostOnly: false,
-                                                creation: new Date().toISOString(),
-                                                lastAccessed: new Date().toISOString()
-                                        }))
-                                        .filter(i => i.key && i.value && i.key != "x-referer");
                         }
+                        // is cookie string
+                        else {
+                                if (accountText.match(/^(?:\s*\w+\s*=\s*[^;]*;?)+/)) {
+                                        spin = createOraDots(getText('login', 'loginCookieString') + ` (${file})`);
+                                        spin._start();
+                                        appState = accountText.split(';')
+                                                .map(i => {
+                                                        const [key, value] = i.split('=');
+                                                        return {
+                                                                key: (key || "").trim(),
+                                                                value: (value || "").trim(),
+                                                                domain: "facebook.com",
+                                                                path: "/",
+                                                                hostOnly: true,
+                                                                creation: new Date().toISOString(),
+                                                                lastAccessed: new Date().toISOString()
+                                                        };
+                                                })
+                                                .filter(i => i.key && i.value && i.key != "x-referer");
+                                }
+                                // is netscape cookie
+                                else if (isNetScapeCookie(accountText)) {
+                                        spin = createOraDots(getText('login', 'loginCookieNetscape') + ` (${file})`);
+                                        spin._start();
+                                        appState = netScapeToCookies(accountText);
+                                }
+                                else if (
+                                        (splitAccountText.length == 2 || splitAccountText.length == 3) &&
+                                        !splitAccountText.slice(0, 2).map(i => i.trim()).some(i => i.includes(' '))
+                                ) {
+                                        // bug if account.txt is "[]"
+                                        global.GoatBot.config.facebookAccount.email = splitAccountText[0]; // bug here=> email is "["
+                                        global.GoatBot.config.facebookAccount.password = splitAccountText[1]; // bug here=> password is "]"
+                                        if (splitAccountText[2]) {
+                                                const code2FATemp = splitAccountText[2].replace(/ /g, "");
+                                                global.GoatBot.config.facebookAccount['2FASecret'] = code2FATemp;
+                                        }
+                                        writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
+                                }
+                                // is json (cookies or appstate)
+                                else {
+                                        try {
+                                                spin = createOraDots(getText('login', 'loginCookieArray') + ` (${file})`);
+                                                spin._start();
+                                                appState = JSON.parse(accountText);
+                                        }
+                                        catch (err) {
+                                                const error = new Error(`${file} is invalid`);
+                                                error.name = "ACCOUNT_ERROR";
+                                                throw error;
+                                        }
+                                        if (appState.some(i => i.name))
+                                                appState = appState.map(i => {
+                                                        i.key = i.name;
+                                                        delete i.name;
+                                                        return i;
+                                                });
+                                        else if (!appState.some(i => i.key)) {
+                                                const error = new Error(`${file} is invalid`);
+                                                error.name = "ACCOUNT_ERROR";
+                                                throw error;
+                                        }
+                                        appState = appState
+                                                .map(item => ({
+                                                        ...item,
+                                                        domain: "facebook.com",
+                                                        path: "/",
+                                                        hostOnly: false,
+                                                        creation: new Date().toISOString(),
+                                                        lastAccessed: new Date().toISOString()
+                                                }))
+                                                .filter(i => i.key && i.value && i.key != "x-referer");
+                                }
+                        }
+
                         if (!await checkLiveCookie(appState.map(i => i.key + "=" + i.value).join("; "), facebookAccount.userAgent)) {
                                 const error = new Error("Cookie is invalid");
                                 error.name = "COOKIE_INVALID";
                                 throw error;
                         }
-                }
-        }
-        catch (err) {
-                spin && spin._stop();
-                let {
-                        email,
-                        password
-                } = facebookAccount;
-                if (err.name === "TOKEN_ERROR")
-                        log.err("LOGIN FACEBOOK", getText('login', 'tokenError', colors.green("EAAAA..."), colors.green(dirAccount)));
-                else if (err.name === "COOKIE_INVALID")
-                        log.err("LOGIN FACEBOOK", getText('login', 'cookieError'));
-
-                if (!email || !password) {
-                        log.warn("LOGIN FACEBOOK", getText('login', 'cannotFindAccount'));
-                        const rl = readline.createInterface({
-                                input: process.stdin,
-                                output: process.stdout
-                        });
-                        const options = [
-                                getText('login', 'chooseAccount'),
-                                getText('login', 'chooseToken'),
-                                getText('login', 'chooseCookieString'),
-                                getText('login', 'chooseCookieArray')
-                        ];
-                        let currentOption = 0;
-                        await new Promise((resolve) => {
-                                const character = '>';
-                                function showOptions() {
-                                        rl.output.write(`\r${options.map((option, index) => index === currentOption ? colors.blueBright(`${character} (${index + 1}) ${option}`) : `  (${index + 1}) ${option}`).join('\n')}\u001B`);
-                                        rl.write('\u001B[?25l'); // hides cursor
-                                }
-                                rl.input.on('keypress', (_, key) => {
-                                        if (key.name === 'up') {
-                                                currentOption = (currentOption - 1 + options.length) % options.length;
-                                        }
-                                        else if (key.name === 'down') {
-                                                currentOption = (currentOption + 1) % options.length;
-                                        }
-                                        else if (!isNaN(key.name)) {
-                                                const number = parseInt(key.name);
-                                                if (number >= 0 && number <= options.length)
-                                                        currentOption = number - 1;
-                                                process.stdout.write('\x1b[1D'); // delete the character
-                                        }
-                                        else if (key.name === 'enter' || key.name === 'return') {
-                                                rl.input.removeAllListeners('keypress');
-                                                rl.close();
-                                                clearLines(options.length + 1);
-                                                showOptions();
-                                                resolve();
-                                        }
-                                        else {
-                                                process.stdout.write('\x1b[1D'); // delete the character
-                                        }
-
-                                        clearLines(options.length);
-                                        showOptions();
-                                });
-                                showOptions();
-                        });
-
-                        rl.write('\u001B[?25h\n'); // show cursor 
-                        clearLines(options.length + 1);
-                        log.info("LOGIN FACEBOOK", getText('login', 'loginWith', options[currentOption]));
-
-                        if (currentOption == 0) {
-                                email = await input(`${getText('login', 'inputEmail')} `);
-                                password = await input(`${getText('login', 'inputPassword')} `, true);
-                                const twoFactorAuth = await input(`${getText('login', 'input2FA')} `);
-                                facebookAccount.email = email || '';
-                                facebookAccount.password = password || '';
-                                facebookAccount['2FASecret'] = twoFactorAuth || '';
-                                writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
-                        }
-                        else if (currentOption == 1) {
-                                const token = await input(getText('login', 'inputToken') + " ");
-                                writeFileSync(global.client.dirAccount, token);
-                        }
-                        else if (currentOption == 2) {
-                                const cookie = await input(getText('login', 'inputCookieString') + " ");
-                                writeFileSync(global.client.dirAccount, cookie);
-                        }
-                        else {
-                                const cookie = await input(getText('login', 'inputCookieArray') + " ");
-                                writeFileSync(global.client.dirAccount, JSON.stringify(JSON.parse(cookie), null, 2));
-                        }
-                        return await getAppStateToLogin();
-                }
-
-                log.info("LOGIN FACEBOOK", getText('login', 'loginPassword'));
-                log.info("ACCOUNT INFO", `Email: ${facebookAccount.email}, I_User: ${facebookAccount.i_user || "(empty)"}`);
-                spin = createOraDots(getText('login', 'loginPassword'));
-                spin._start();
-
-                try {
-                        appState = await getAppStateFromEmail(spin, facebookAccount);
-                        spin._stop();
+                        global.client.dirAccount = filePath;
+                        successLoad = true;
+                        break;
                 }
                 catch (err) {
-                        spin._stop();
-                        log.err("LOGIN FACEBOOK", getText('login', 'loginError'), err.message, err);
-                        process.exit();
+                        spin && spin._stop();
+                        log.warn("LOGIN FACEBOOK", `Failed to login with ${file}: ${err.message}`);
                 }
+        }
+
+        if (!successLoad) {
+                if (loginWithEmail)
+                        return await getAppStateFromEmail(undefined, facebookAccount);
+
+                log.err("LOGIN FACEBOOK", "All accounts in account.txt and accounts.txt are invalid or not found.");
+                const rl = readline.createInterface({
+                        input: process.stdin,
+                        output: process.stdout
+                });
+                const options = [
+                        getText('login', 'chooseAccount'),
+                        getText('login', 'chooseToken'),
+                        getText('login', 'chooseCookieString'),
+                        getText('login', 'chooseCookieArray')
+                ];
+                let currentOption = 0;
+                await new Promise((resolve) => {
+                        const character = '>';
+                        function showOptions() {
+                                rl.output.write(`\r${options.map((option, index) => index === currentOption ? colors.blueBright(`${character} (${index + 1}) ${option}`) : `  (${index + 1}) ${option}`).join('\n')}\u001B`);
+                                rl.write('\u001B[?25l'); // hides cursor
+                        }
+                        rl.input.on('keypress', (_, key) => {
+                                if (key.name === 'up') {
+                                        currentOption = (currentOption - 1 + options.length) % options.length;
+                                }
+                                else if (key.name === 'down') {
+                                        currentOption = (currentOption + 1) % options.length;
+                                }
+                                else if (!isNaN(key.name)) {
+                                        const number = parseInt(key.name);
+                                        if (number >= 0 && number <= options.length)
+                                                currentOption = number - 1;
+                                        process.stdout.write('\x1b[1D'); // delete the character
+                                }
+                                else if (key.name === 'enter' || key.name === 'return') {
+                                        rl.input.removeAllListeners('keypress');
+                                        rl.close();
+                                        clearLines(options.length + 1);
+                                        showOptions();
+                                        resolve();
+                                }
+                                else {
+                                        process.stdout.write('\x1b[1D'); // delete the character
+                                }
+
+                                clearLines(options.length);
+                                showOptions();
+                        });
+                        showOptions();
+                });
+
+                rl.write('\u001B[?25h\n'); // show cursor 
+                clearLines(options.length + 1);
+                log.info("LOGIN FACEBOOK", getText('login', 'loginWith', options[currentOption]));
+
+                let email, password;
+                if (currentOption == 0) {
+                        email = await input(`${getText('login', 'inputEmail')} `);
+                        password = await input(`${getText('login', 'inputPassword')} `, true);
+                        const twoFactorAuth = await input(`${getText('login', 'input2FA')} `);
+                        facebookAccount.email = email || '';
+                        facebookAccount.password = password || '';
+                        facebookAccount['2FASecret'] = twoFactorAuth || '';
+                        writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
+                }
+                else if (currentOption == 1) {
+                        const token = await input(getText('login', 'inputToken') + " ");
+                        writeFileSync(path.join(process.cwd(), "account.txt"), token);
+                }
+                else if (currentOption == 2) {
+                        const cookie = await input(getText('login', 'inputCookieString') + " ");
+                        writeFileSync(path.join(process.cwd(), "account.txt"), cookie);
+                }
+                else {
+                        const cookie = await input(getText('login', 'inputCookieArray') + " ");
+                        writeFileSync(path.join(process.cwd(), "account.txt"), JSON.stringify(JSON.parse(cookie), null, 2));
+                }
+                return await getAppStateToLogin();
         }
         return appState;
 }
