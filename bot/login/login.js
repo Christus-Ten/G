@@ -888,6 +888,7 @@ async function startBot(loginWithEmail) {
                                 }
                         }
                         log.master("NOTIFICATION", (notification || "").trim());
+                        log.info("Starting bot...");
                         log.master("SUCCESS", getText('login', 'runBot'));
                         log.master("LOAD TIME", `${convertTime(Date.now() - global.GoatBot.startTime)}`);
                         logColor("#f5ab00", createLine("COPYRIGHT"));
@@ -999,20 +1000,19 @@ async function startBot(loginWithEmail) {
                                 //      return;
                                 // }
 
-                                if (
-                                        global.GoatBot.config.whiteListMode?.enable == true
-                                        && global.GoatBot.config.whiteListModeThread?.enable == true
-                                        // admin
-                                        && !global.GoatBot.config.adminBot.includes(event.senderID)
-                                ) {
-                                        if (
-                                                !global.GoatBot.config.whiteListMode.whiteListIds.includes(event.senderID)
-                                                && !global.GoatBot.config.whiteListModeThread.whiteListThreadIds.includes(event.threadID)
-                                                // admin
-                                                && !global.GoatBot.config.adminBot.includes(event.senderID)
-                                        )
-                                                return;
-                                }
+                                if (config.whiteListMode?.enable == true
+                        && global.GoatBot.config.whiteListModeThread?.enable == true
+                        // admin
+                        && !global.GoatBot.config.adminBot.includes(event.senderID)
+                ) {
+                        if (
+                                !global.GoatBot.config.whiteListMode.whiteListIds.includes(event.senderID)
+                                && !global.GoatBot.config.whiteListModeThread.whiteListThreadIds.includes(event.threadID)
+                                // admin
+                                && !global.GoatBot.config.adminBot.includes(event.senderID)
+                        )
+                                return;
+                }
                                 else if (
                                         global.GoatBot.config.whiteListMode?.enable == true
                                         && !global.GoatBot.config.whiteListMode.whiteListIds.includes(event.senderID)
@@ -1063,7 +1063,7 @@ async function startBot(loginWithEmail) {
                                                 return;
                                 }
 
-                                const handlerAction = require("../handler/handlerAction.js")(api, threadModel, userModel, dashBoardModel, globalModel, usersData, threadsData, dashBoardData, globalData);
+                                const handlerAction = require("../handler/handlerAction.js")(api, threadModel, userModel, null, globalModel, usersData, threadsData, null, globalData);
 
                                 if (hasBanned === false)
                                         handlerAction(event);
