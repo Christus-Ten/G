@@ -726,7 +726,8 @@ async function startBot(loginWithEmail) {
                         logColor("#f5ab00", createLine("BOT INFO"));
                         log.info("NODE VERSION", process.version);
                         log.info("PROJECT VERSION", currentVersion);
-                        log.info("BOT ID", `${global.botID} - ${await getName(global.botID)}`);
+                        const botName = await getName(global.botID, api);
+                        log.info("BOT ID", `${global.botID} - ${botName || 'GoatBot'}`);
                         log.info("PREFIX", global.GoatBot.config.prefix);
                         log.info("LANGUAGE", global.GoatBot.config.language);
                         log.info("BOT NICK NAME", global.GoatBot.config.nickNameBot || "GOAT BOT");
