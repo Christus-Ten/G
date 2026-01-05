@@ -36,7 +36,9 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                 }
 
                 if (processedBody && processedBody.startsWith(prefix)) {
-                        const [matchedCommand] = processedBody.slice(prefix.length).trim().split(/ +/);
+                        const bodySlice = processedBody.slice(prefix.length).trim();
+                        if (bodySlice.length === 0) return; // Ignore prefix alone
+                        const [matchedCommand] = bodySlice.split(/ +/);
                         if (matchedCommand && !global.GoatBot.commands.has(matchedCommand)) {
                                 const allCommands = Array.from(global.GoatBot.commands.keys());
                                 const { closestMatch, distance } = allCommands.reduce((acc, cmd) => {
@@ -46,9 +48,9 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                                 }, { closestMatch: null, distance: Infinity });
 
                                 if (distance <= 2) {
-                                        return api.sendMessage(` কমান্ড "${matchedCommand}" খুঁজে পাওয়া যায়নি। আপনি কি "${prefix}${closestMatch}" বোঝাতে চেয়েছেন?`, event.threadID);
+                                        return api.sendMessage(`Command "${matchedCommand}" does not exist, type ${prefix}help to see all available commands\n\n🧘 Did you mean: ${prefix}${closestMatch}?`, event.threadID);
                                 } else {
-                                        return api.sendMessage(`দুঃখিত, "${matchedCommand}" কমান্ডটি খুঁজে পাওয়া যায়নি। সঠিক কমান্ড জানতে ${prefix}help লিখুন।`, event.threadID);
+                                        return api.sendMessage(`Sorry, command "${matchedCommand}" does not exist. Type ${prefix}help to see all available commands.`, event.threadID);
                                 }
                         }
                 }
