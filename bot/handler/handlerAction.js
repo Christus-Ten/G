@@ -72,9 +72,10 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                         const reactorID = senderID || userID;
                         const { adminBot, unsendEmoji } = global.GoatBot.config;
                         if (unsendEmoji && unsendEmoji.includes(reaction) && adminBot.includes(reactorID)) {
-                                api.getMessageInfo(messageID, (err, info) => {
-                                        if (!err && info.senderID === api.getCurrentUserID()) {
-                                                api.unsendMessage(messageID);
+                                api.unsendMessage(messageID, (err) => {
+                                        if (err) {
+                                                // If error, it might not be the bot's message
+                                                // console.error("Failed to unsend message:", err);
                                         }
                                 });
                         }
