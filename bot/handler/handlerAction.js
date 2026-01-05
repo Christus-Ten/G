@@ -47,9 +47,9 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                                 }, { closestMatch: null, distance: Infinity });
 
                                 if (matchedCommand && distance <= 2) {
-                                        return api.sendMessage(`Command "${matchedCommand}" does not exist, type ${prefix}help to see all available commands\n\n🧘 Did you mean: ${prefix}${closestMatch}?`, event.threadID);
+                                        return message.reply(`Command "${matchedCommand}" does not exist, type ${prefix}help to see all available commands\n\n🧘 Did you mean: ${prefix}${closestMatch}?`);
                                 } else {
-                                        return api.sendMessage(`The command you are using does not exist, type ${prefix}help to see all available commands`, event.threadID);
+                                        return message.reply(`The command you are using does not exist, type ${prefix}help to see all available commands`);
                                 }
                         }
                 }
