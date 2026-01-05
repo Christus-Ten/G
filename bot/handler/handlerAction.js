@@ -20,18 +20,20 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
 
                 // ————————————————— CHECK NIXPREFIX ————————————————— //
                 if (body) {
-                        const [commandName] = body.trim().split(/ +/);
+                        const bodyTrim = body.trim();
+                        const [commandName] = bodyTrim.split(/ +/);
                         const command = global.GoatBot.commands.get(commandName.toLowerCase()) || 
                                         global.GoatBot.commands.get(global.GoatBot.aliases.get(commandName.toLowerCase()));
                         
                         if (command && command.config && command.config.nixPrefix === true) {
                                 // Execute command without prefix
-                                event.body = prefix + body.trim(); 
+                                event.body = prefix + bodyTrim; 
                         }
                 }
 
-                if (event.body && event.body.startsWith(prefix)) {
-                        const [matchedCommand] = event.body.slice(prefix.length).trim().split(/ +/);
+                const currentBody = event.body || body;
+                if (currentBody && currentBody.startsWith(prefix)) {
+                        const [matchedCommand] = currentBody.slice(prefix.length).trim().split(/ +/);
                         if (matchedCommand && !global.GoatBot.commands.has(matchedCommand)) {
                                 const allCommands = Array.from(global.GoatBot.commands.keys());
                                 const { closestMatch, distance } = allCommands.reduce((acc, cmd) => {
