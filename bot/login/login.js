@@ -1,4 +1,4 @@
-// set bash title
+// login Fix by Aryan Rayhan 
         process.stdout.write("\x1b]2;Goat Bot V2 - Made by NTKhang\x1b\x5c");
 const defaultRequire = require;
 
