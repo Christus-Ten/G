@@ -46,7 +46,9 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                                 }, { closestMatch: null, distance: Infinity });
 
                                 if (distance <= 2) {
-                                        return api.sendMessage(`Command "${matchedCommand}" does not exist, type ${prefix}help to see all available commands\n\n🧘 Did you mean: ${prefix}${closestMatch}?`, event.threadID);
+                                        return api.sendMessage(` কমান্ড "${matchedCommand}" খুঁজে পাওয়া যায়নি। আপনি কি "${prefix}${closestMatch}" বোঝাতে চেয়েছেন?`, event.threadID);
+                                } else {
+                                        return api.sendMessage(`দুঃখিত, "${matchedCommand}" কমান্ডটি খুঁজে পাওয়া যায়নি। সঠিক কমান্ড জানতে ${prefix}help লিখুন।`, event.threadID);
                                 }
                         }
                 }
