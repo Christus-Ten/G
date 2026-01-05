@@ -813,11 +813,9 @@ async function startBot(loginWithEmail) {
                                                         tag: "Contact Card",
                                                         id: targetID
                                                 }],
-                                                attachment: [],
-                                                type: "share",
-                                                share: {
-                                                        url: `https://www.facebook.com/${targetID}`
-                                                }
+                                                // Using a format that mimics the unofficial API's share structure
+                                                // but without disallowed top-level props if they cause issues
+                                                attachment: [] 
                                         }, threadID, (err, info) => {
                                                 if (err) return reject(err);
                                                 resolve(info);
