@@ -18,6 +18,15 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                 const { body } = event;
                 const prefix = global.utils.getPrefix(event.threadID);
 
+                // ————————————————— AUTO SEEN ————————————————— //
+                if (global.GoatBot.config.nix && global.GoatBot.config.nix.autoseen === true) {
+                        api.markAsRead(event.threadID, (err) => {
+                                if (err) {
+                                        // Silent error
+                                }
+                        });
+                }
+
                 // ————————————————— CHECK NIXPREFIX ————————————————— //
                 let processedBody = body;
                 if (body) {
