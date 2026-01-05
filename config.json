@@ -95,6 +95,9 @@
     "typ": false,
     "presence": false
   },
+  "nix": {
+    "autoseen": true
+  },
   "unsendEmoji": [
     "😠",
     "😡"
