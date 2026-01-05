@@ -214,13 +214,15 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
                 let isUserCallCommand = false;
                 async function onStart() {
                         // —————————————— CHECK USE BOT —————————————— //
-                        const currentBody = event.body || body;
-                        if (!currentBody || !currentBody.startsWith(prefix))
+                        const currentEventBody = event.body || body;
+                        if (!currentEventBody || !currentEventBody.startsWith(prefix))
                                 return;
                         const dateNow = Date.now();
-                        const args = currentBody.slice(prefix.length).trim().split(/ +/);
+                        const args = currentEventBody.slice(prefix.length).trim().split(/ +/);
                         // ————————————  CHECK HAS COMMAND ——————————— //
-                        let commandName = args.shift().toLowerCase();
+                        let commandName = (args.shift() || "").toLowerCase();
+                        if (!commandName)
+                                return;
                         let command = GoatBot.commands.get(commandName) || GoatBot.commands.get(GoatBot.aliases.get(commandName));
                         // ———————— CHECK ALIASES SET BY GROUP ———————— //
                         const aliasesData = threadData.data.aliases || {};
@@ -328,8 +330,8 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
                 */
                 async function onChat() {
                         const allOnChat = GoatBot.onChat || [];
-                        const currentBody = event.body || body;
-                        const args = currentBody ? currentBody.split(/ +/) : [];
+                        const currentEventBody = event.body || body;
+                        const args = currentEventBody ? currentEventBody.split(/ +/) : [];
                         for (const key of allOnChat) {
                                 const command = GoatBot.commands.get(key);
                                 if (!command)
