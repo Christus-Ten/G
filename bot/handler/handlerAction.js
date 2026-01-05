@@ -37,20 +37,19 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
 
                 if (processedBody && processedBody.startsWith(prefix)) {
                         const bodySlice = processedBody.slice(prefix.length).trim();
-                        if (bodySlice.length === 0) return; // Ignore prefix alone
                         const [matchedCommand] = bodySlice.split(/ +/);
-                        if (matchedCommand && !global.GoatBot.commands.has(matchedCommand)) {
+                        if (!matchedCommand || !global.GoatBot.commands.has(matchedCommand)) {
                                 const allCommands = Array.from(global.GoatBot.commands.keys());
                                 const { closestMatch, distance } = allCommands.reduce((acc, cmd) => {
-                                        const dist = global.utils.levenshteinDistance(matchedCommand, cmd);
+                                        const dist = global.utils.levenshteinDistance(matchedCommand || "", cmd);
                                         if (dist < acc.distance) return { closestMatch: cmd, distance: dist };
                                         return acc;
                                 }, { closestMatch: null, distance: Infinity });
 
-                                if (distance <= 2) {
+                                if (matchedCommand && distance <= 2) {
                                         return api.sendMessage(`Command "${matchedCommand}" does not exist, type ${prefix}help to see all available commands\n\n🧘 Did you mean: ${prefix}${closestMatch}?`, event.threadID);
                                 } else {
-                                        return api.sendMessage(`Sorry, command "${matchedCommand}" does not exist. Type ${prefix}help to see all available commands.`, event.threadID);
+                                        return api.sendMessage(`The command you are using does not exist, type ${prefix}help to see all available commands`, event.threadID);
                                 }
                         }
                 }
