@@ -71,7 +71,7 @@ module.exports = {
           else if (/twitter\.com|x\.com/i.test(url)) platform = "Twitter/X";
 
           await api.sendMessage({
-            body: `✅ Downloaded Successfully!\n━━━━━━━━━━━━━━━━━━\n📝 Title: ${resData.title || "No Title"}\n🌐 Platform: ${platform}\n━━━━━━━━━━━━━━━━━━`,
+            body: `• Title: ${resData.title || "No Title"}\n• Platform: ${platform}`,
             attachment: fs.createReadStream(filePath)
           }, threadID);
 
