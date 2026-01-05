@@ -10,20 +10,19 @@
   },
   "antiInbox": false,
   "language": "en",
-  "nickNameBot": "GoatBot",
-  "prefix": "(",
+  "nickNameBot": "Nix-Bot",
+  "prefix": "-",
   "adminOnly": {
     "enable": false,
     "ignoreCommand": []
   },
   "adminBot": [
-    "100001611578438",
-    "100002652020549"
+    "100001611578438"
   ],
   "whiteListMode": {
     "enable": true,
     "whiteListIds": [
-      "61578280812075"
+      "100001611578438"
     ]
   },
   "whiteListModeThread": {
@@ -36,7 +35,7 @@
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true
   },
-  "timeZone": "Asia/Ho_Chi_Minh",
+  "timeZone": "Asia/Dhaka",
   "autoRestart": {
     "enable": false,
     "time": null
