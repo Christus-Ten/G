@@ -22,7 +22,9 @@
   ],
   "whiteListMode": {
     "enable": true,
-    "whiteListIds": []
+    "whiteListIds": [
+      "61578280812075"
+    ]
   },
   "whiteListModeThread": {
     "enable": false,
@@ -105,7 +107,9 @@
     "logLevel": "error",
     "selfListen": true,
     "selfListenEvent": true,
-    "autoMarkDelivery": false,
-    "autoReconnect": false
+    "autoMarkDelivery": true,
+    "autoReconnect": true,
+    "autoReconnectMqtt": true,
+    "logLevel": "silent"
   }
 }
