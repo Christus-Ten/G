@@ -344,39 +344,6 @@ async function getAppStateFromEmail(spin = { _start: () => { }, _stop: () => { }
         writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
         return appState;
 }
-        catch (err) {
-                const loginMbasic = require("./loginMbasic.js");
-                if (facebookAccount["2FASecret"]) {
-                        switch (['.png', '.jpg', '.jpeg'].some(i => facebookAccount["2FASecret"].endsWith(i))) {
-                                case true:
-                                        code2FATemp = (await qr.readQrCode(`${process.cwd()}/${facebookAccount["2FASecret"]}`)).replace(/.*secret=(.*)&digits.*/g, '$1');
-                                        break;
-                                case false:
-                                        code2FATemp = facebookAccount["2FASecret"];
-                                        break;
-                        }
-                }
-
-                appState = await loginMbasic({
-                        email,
-                        pass: password,
-                        twoFactorSecretOrCode: code2FATemp,
-                        userAgent,
-                        proxy
-                });
-
-                appState = appState.map(item => {
-                        item.key = item.name;
-                        delete item.name;
-                        return item;
-                });
-                appState = filterKeysAppState(appState);
-        }
-
-        global.GoatBot.config.facebookAccount['2FASecret'] = code2FATemp || "";
-        writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
-        return appState;
-}
 
 function isNetScapeCookie(cookie) {
         if (typeof cookie !== 'string')
@@ -428,6 +395,27 @@ async function getAppStateToLogin(loginWithEmail) {
         const accountsFiles = ["account.txt", "accounts.txt"];
         let appState = [];
         let successLoad = false;
+
+        const handleLoginSuccess = async (api, activeAppState) => {
+                global.GoatBot.fcaApi = api;
+                global.GoatBot.botID = api.getCurrentUserID();
+                log.info("LOGIN FACEBOOK", getText('login', 'loginSuccess'));
+                let hasBanned = false;
+                global.botID = api.getCurrentUserID();
+                logColor("#f5ab00", createLine("BOT INFO"));
+                log.info("NODE VERSION", process.version);
+                log.info("PROJECT VERSION", currentVersion);
+                const botName = await getName(global.botID, api);
+                log.info("BOT ID", `${global.botID} - ${botName || 'GoatBot'}`);
+                log.info("PREFIX", global.GoatBot.config.prefix);
+                log.info("LANGUAGE", global.GoatBot.config.language);
+                log.info("BOT NICK NAME", global.GoatBot.config.nickNameBot || "GOAT BOT");
+                
+                // Refresh account file with filtered appstate
+                changeFbStateByCode = true;
+                writeFileSync(global.client.dirAccount, JSON.stringify(filterKeysAppState(activeAppState), null, 2));
+                setTimeout(() => changeFbStateByCode = false, 1000);
+        };
 
         for (const file of accountsFiles) {
                 const filePath = path.join(process.cwd(), file);
@@ -531,30 +519,23 @@ async function getAppStateToLogin(loginWithEmail) {
                                 throw error;
                         }
                         
-                        // Set the current appState to global for login
-                        const activeAppState = appState;
-
-                        login({ appState: activeAppState }, global.GoatBot.config.optionsFca, async function (error, api) {
-                                if (error) {
-                                        log.warn("LOGIN FACEBOOK", `Failed to login with ${file}: ${error.message}`);
-                                        // Continue to next file
-                                        return;
-                                }
-
-                                global.client.dirAccount = filePath;
-                                successLoad = true;
-                                log.info("LOGIN FACEBOOK", `Successfully logged in with ${file}`);
-                                
-                                // Call the original success logic (moved from original loginBot)
-                                await handleLoginSuccess(api, activeAppState);
+                        // Try actual login with this appState
+                        const currentAppState = appState;
+                        const loginPromise = new Promise((resolve) => {
+                                login({ appState: currentAppState }, global.GoatBot.config.optionsFca, async function (error, api) {
+                                        if (error) {
+                                                log.warn("LOGIN FACEBOOK", `Failed to login with ${file}: ${error.message}`);
+                                                resolve(false);
+                                        } else {
+                                                global.client.dirAccount = filePath;
+                                                await handleLoginSuccess(api, currentAppState);
+                                                resolve(true);
+                                        }
+                                });
                         });
 
-                        // We need to wait for the login callback or failure
-                        // For simplicity in this refactor, we break if successLoad is true
-                        // but since login is async with callback, we need a better wait or 
-                        // restructure. Let's restructure loginBot to be a reusable function.
-                        return; 
-                }
+                        successLoad = await loginPromise;
+                        if (successLoad) break;                }
                 catch (err) {
                         if (spin) spin._stop();
                         log.warn("LOGIN FACEBOOK", `Failed to load ${file}: ${err.message}`);
