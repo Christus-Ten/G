@@ -1,14 +1,18 @@
 const os = require('os');
 const pkg = require('../../package.json');
+const { createCanvas, loadImage } = require('canvas');
+const fs = require('fs-extra');
+const path = require('path');
 
 module.exports = {
   config: {
     name: "uptime",
+    aliases: ["up"],
     version: "0.0.1",
     author: "ArYAN",
     countDown: 5,
     role: 0,
-    shortDescription: "Check bot and system status",
+    shortDescription: "Check bot and system status with image",
     category: "info"
   },
 
@@ -27,19 +31,69 @@ module.exports = {
     const ping = Date.now() - event.timestamp;
     const version = pkg.version;
 
-    const msg = `━━━━━━━━━━━━━━━━━━
-BOT STATUS
-━━━━━━━━━━━━━━━━━━
-Uptime: ${botUptime}
-System Uptime: ${systemUptimeFormatted}
-CPU: ${cpuInfo.model}
-RAM: ${usedMemory}GB / ${totalMemory}GB
-Memory: ${((usedMemory / totalMemory) * 100).toFixed(2)}%
-Version: ${version}
-Ping: ${ping}ms
-━━━━━━━━━━━━━━━━━━`;
+    const cacheDir = path.join(__dirname, "cache");
+    if (!fs.existsSync(cacheDir)) fs.ensureDirSync(cacheDir);
+    const imgPath = path.join(cacheDir, `uptime_${Date.now()}.png`);
 
-    return api.sendMessage(msg, event.threadID, event.messageID);
+    const canvas = createCanvas(800, 500);
+    const ctx = canvas.getContext('2d');
+
+    // Background
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Border
+    ctx.strokeStyle = '#FF8C00'; // Dark Orange
+    ctx.lineWidth = 10;
+    ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+
+    // Title
+    ctx.fillStyle = '#FF8C00';
+    ctx.font = 'bold 45px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('BOT SYSTEM STATUS', 400, 80);
+
+    // Stats
+    ctx.textAlign = 'left';
+    ctx.font = '30px Arial';
+    ctx.fillStyle = '#ffffff';
+
+    const startX = 80;
+    const startY = 160;
+    const lineSpacing = 50;
+
+    const stats = [
+      `Uptime: ${botUptime}`,
+      `System Uptime: ${systemUptimeFormatted}`,
+      `CPU: ${cpuInfo.model.split(' ')[0]} ${cpuInfo.model.split(' ')[1]}`,
+      `RAM: ${usedMemory}GB / ${totalMemory}GB`,
+      `Memory: ${((usedMemory / totalMemory) * 100).toFixed(2)}%`,
+      `Version: ${version}`,
+      `Ping: ${ping}ms`
+    ];
+
+    stats.forEach((stat, index) => {
+      ctx.fillStyle = '#FF8C00';
+      ctx.fillText('•', startX - 30, startY + (index * lineSpacing));
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(stat, startX, startY + (index * lineSpacing));
+    });
+
+    // Body message area
+    ctx.fillStyle = 'rgba(255, 140, 0, 0.1)';
+    ctx.fillRect(startX - 20, 100, 680, 5);
+
+    const buffer = canvas.toBuffer('image/png');
+    fs.writeFileSync(imgPath, buffer);
+
+    const bodyMsg = `━━━━━━━━━━━━━━━━━━\nBOT STATUS\n━━━━━━━━━━━━━━━━━━\nUptime: ${botUptime}\nVersion: ${version}\n━━━━━━━━━━━━━━━━━━`;
+
+    return api.sendMessage({
+      body: bodyMsg,
+      attachment: fs.createReadStream(imgPath)
+    }, event.threadID, () => {
+      if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
+    }, event.messageID);
   }
 };
 
