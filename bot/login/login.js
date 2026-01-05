@@ -806,32 +806,18 @@ async function startBot(loginWithEmail) {
                         logColor("#f5ab00", character);
                         global.GoatBot.config.adminBot = adminBot;
                         api.shareContact = async (senderID, targetID, threadID, messageID) => {
-                                return new Promise((resolve, reject) => {
-                                        const msg = {
-                                                body: "Contact Details",
-                                                attachment: [],
-                                                mentions: [{
-                                                        tag: "Contact Card",
-                                                        id: targetID
-                                                }],
-                                                buttons: [
-                                                        {
-                                                                type: "web_url",
-                                                                url: `https://www.facebook.com/${targetID}`,
-                                                                title: "Facebook"
-                                                        },
-                                                        {
-                                                                type: "web_url",
-                                                                url: `https://m.me/${targetID}`,
-                                                                title: "Messenger"
-                                                        }
-                                                ]
-                                        };
-                                        api.sendMessage(msg, threadID, (err, info) => {
-                                                if (err) return reject(err);
-                                                resolve(info);
-                                        }, messageID);
-                                });
+                                try {
+                                        const name = await getName(targetID, api) || targetID;
+                                        const msg = `— USER INFO —\n\nName: ${name}\nUID: ${targetID}\n\nProfile: https://www.facebook.com/${targetID}\nMessenger: https://m.me/${targetID}`;
+                                        return new Promise((resolve, reject) => {
+                                                api.sendMessage(msg, threadID, (err, info) => {
+                                                        if (err) return reject(err);
+                                                        resolve(info);
+                                                }, messageID);
+                                        });
+                                } catch (e) {
+                                        return api.sendMessage(targetID, threadID, null, messageID);
+                                }
                         };
                         writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
                         writeFileSync(global.client.dirConfigCommands, JSON.stringify(global.GoatBot.configCommands, null, 2));
