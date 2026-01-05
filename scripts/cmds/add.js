@@ -13,7 +13,7 @@ async function onStart({ message, event, args }) {
   const videoUrl = reply.attachments[0].url;
 
   try {
-    const imgurRes = await axios.get(`http://65.109.80.126:20409/aryan/imgur?url=${encodeURIComponent(videoUrl)}`);
+    const imgurRes = await axios.get(`https://nix-apix.vercel.app/aryan/imgur?url=${encodeURIComponent(videoUrl)}`);
     const uploadedUrl = imgurRes.data.imgur;
 
     const addRes = await axios.get(`https://nix-random-api.vercel.app/api/mixadd?name=${encodeURIComponent(name)}&url=${encodeURIComponent(uploadedUrl)}`);
