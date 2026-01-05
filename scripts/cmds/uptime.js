@@ -86,7 +86,7 @@ module.exports = {
     const buffer = canvas.toBuffer('image/png');
     fs.writeFileSync(imgPath, buffer);
 
-    const bodyMsg = `━━━━━━━━━━━━━━━━━━\nBOT STATUS\n━━━━━━━━━━━━━━━━━━\nUptime: ${botUptime}\nVersion: ${version}\n━━━━━━━━━━━━━━━━━━`;
+    const bodyMsg = `BOT STATUS\nUptime: ${botUptime}\nSystem Uptime: ${systemUptimeFormatted}\nCPU: ${cpuInfo.model.split(' ')[0]} ${cpuInfo.model.split(' ')[1]}\nRAM: ${usedMemory}GB / ${totalMemory}GB\nMemory: ${((usedMemory / totalMemory) * 100).toFixed(2)}%\nVersion: ${version}\nPing: ${ping}ms`;
 
     return api.sendMessage({
       body: bodyMsg,
