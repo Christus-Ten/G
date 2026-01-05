@@ -20,11 +20,9 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
 
                 // ————————————————— AUTO SEEN ————————————————— //
                 if (global.GoatBot.config.nix && global.GoatBot.config.nix.autoseen === true) {
-                        api.markAsRead(event.threadID, (err) => {
-                                if (err) {
-                                        // Silent error
-                                }
-                        });
+                        try {
+                                api.markAsRead(event.threadID);
+                        } catch (e) {}
                 }
 
                 // ————————————————— CHECK NIXPREFIX ————————————————— //
