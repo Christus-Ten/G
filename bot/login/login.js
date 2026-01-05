@@ -805,23 +805,19 @@ async function startBot(loginWithEmail) {
                         console.log(`\x1b[1m\x1b[33m${("COPYRIGHT:")}\x1b[0m\x1b[1m\x1b[37m \x1b[0m\x1b[1m\x1b[36m${("Project GoatBot v2 created by ntkhang03 (https://github.com/ntkhang03), please do not sell this source code or claim it as your own. Thank you!")}\x1b[0m`);
                         logColor("#f5ab00", character);
                         global.GoatBot.config.adminBot = adminBot;
-                        api.shareContact = async (senderID, targetID, threadID, messageID) => {
-                                return new Promise((resolve, reject) => {
-                                        api.sendMessage({
-                                                attachment: [],
-                                                mentions: [{
-                                                        tag: "Contact Card",
-                                                        id: targetID
-                                                }],
-                                                type: "share",
-                                                share: {
-                                                        url: `https://www.facebook.com/${targetID}`
-                                                }
-                                        }, threadID, (err, info) => {
-                                                if (err) return reject(err);
-                                                resolve(info);
-                                        }, messageID);
-                                });
+                        api.shareContact = (text, targetID, threadID, callback) => {
+                                return api.sendMessage({
+                                        body: text,
+                                        mentions: [{
+                                                tag: text,
+                                                id: targetID
+                                        }],
+                                        attachment: [],
+                                        type: "share",
+                                        share: {
+                                                url: `https://www.facebook.com/${targetID}`
+                                        }
+                                }, threadID, callback);
                         };
                         writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
                         writeFileSync(global.client.dirConfigCommands, JSON.stringify(global.GoatBot.configCommands, null, 2));
