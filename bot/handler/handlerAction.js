@@ -67,6 +67,19 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                         typ, presence, read_receipt
                 } = handlerChat;
 
+                if (event.type === "message_reaction") {
+                        const { reaction, messageID, senderID, userID } = event;
+                        const reactorID = senderID || userID;
+                        const { adminBot, unsendEmoji } = global.GoatBot.config;
+                        if (unsendEmoji && unsendEmoji.includes(reaction) && adminBot.includes(reactorID)) {
+                                api.getMessageInfo(messageID, (err, info) => {
+                                        if (!err && info.senderID === api.getCurrentUserID()) {
+                                                api.unsendMessage(messageID);
+                                        }
+                                });
+                        }
+                }
+
 
                 onAnyEvent();
                 switch (event.type) {
