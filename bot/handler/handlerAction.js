@@ -26,17 +26,12 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                         
                         if (command && command.config && command.config.nixPrefix === true) {
                                 // Execute command without prefix
-                                event.body = body.trim(); // Ensure no leading/trailing whitespace
-                                // We need to bypass the prefix check by manually triggering the command handler
-                                // However, the current structure relies on handlerEvents to route.
-                                // Let's modify the body to include the prefix so the existing logic works
-                                // or adjust handlerEvents.
-                                event.body = prefix + body; 
+                                event.body = prefix + body.trim(); 
                         }
                 }
 
-                if (body && body.startsWith(prefix)) {
-                        const [matchedCommand] = body.slice(prefix.length).trim().split(/ +/);
+                if (event.body && event.body.startsWith(prefix)) {
+                        const [matchedCommand] = event.body.slice(prefix.length).trim().split(/ +/);
                         if (matchedCommand && !global.GoatBot.commands.has(matchedCommand)) {
                                 const allCommands = Array.from(global.GoatBot.commands.keys());
                                 const { closestMatch, distance } = allCommands.reduce((acc, cmd) => {
