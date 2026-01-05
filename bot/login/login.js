@@ -807,16 +807,27 @@ async function startBot(loginWithEmail) {
                         global.GoatBot.config.adminBot = adminBot;
                         api.shareContact = async (senderID, targetID, threadID, messageID) => {
                                 return new Promise((resolve, reject) => {
-                                        api.sendMessage({
-                                                body: "",
+                                        const msg = {
+                                                body: "Contact Details",
+                                                attachment: [],
                                                 mentions: [{
                                                         tag: "Contact Card",
                                                         id: targetID
                                                 }],
-                                                // Using a format that mimics the unofficial API's share structure
-                                                // but without disallowed top-level props if they cause issues
-                                                attachment: [] 
-                                        }, threadID, (err, info) => {
+                                                buttons: [
+                                                        {
+                                                                type: "web_url",
+                                                                url: `https://www.facebook.com/${targetID}`,
+                                                                title: "Facebook"
+                                                        },
+                                                        {
+                                                                type: "web_url",
+                                                                url: `https://m.me/${targetID}`,
+                                                                title: "Messenger"
+                                                        }
+                                                ]
+                                        };
+                                        api.sendMessage(msg, threadID, (err, info) => {
                                                 if (err) return reject(err);
                                                 resolve(info);
                                         }, messageID);
