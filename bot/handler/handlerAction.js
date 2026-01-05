@@ -22,9 +22,10 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
                 let processedBody = body;
                 if (body) {
                         const bodyTrim = body.trim();
-                        const [commandName] = bodyTrim.split(/ +/);
-                        const command = global.GoatBot.commands.get(commandName.toLowerCase()) || 
-                                        global.GoatBot.commands.get(global.GoatBot.aliases.get(commandName.toLowerCase()));
+                        const [commandNameRaw] = bodyTrim.split(/ +/);
+                        const commandName = commandNameRaw.toLowerCase();
+                        const command = global.GoatBot.commands.get(commandName) || 
+                                        global.GoatBot.commands.get(global.GoatBot.aliases.get(commandName));
                         
                         if (command && command.config && command.config.nixPrefix === true) {
                                 // Execute command without prefix
@@ -37,17 +38,18 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
 
                 if (processedBody && processedBody.startsWith(prefix)) {
                         const bodySlice = processedBody.slice(prefix.length).trim();
-                        const [matchedCommand] = bodySlice.split(/ +/);
-                        if (!matchedCommand || !global.GoatBot.commands.has(matchedCommand)) {
+                        const [matchedCommandRaw] = bodySlice.split(/ +/);
+                        const matchedCommand = matchedCommandRaw ? matchedCommandRaw.toLowerCase() : "";
+                        if (!matchedCommand || (!global.GoatBot.commands.has(matchedCommand) && !global.GoatBot.aliases.has(matchedCommand))) {
                                 const allCommands = Array.from(global.GoatBot.commands.keys());
                                 const { closestMatch, distance } = allCommands.reduce((acc, cmd) => {
-                                        const dist = global.utils.levenshteinDistance(matchedCommand || "", cmd);
+                                        const dist = global.utils.levenshteinDistance(matchedCommand, cmd);
                                         if (dist < acc.distance) return { closestMatch: cmd, distance: dist };
                                         return acc;
                                 }, { closestMatch: null, distance: Infinity });
 
                                 if (matchedCommand && distance <= 2) {
-                                        return message.reply(`Command "${matchedCommand}" does not exist, type ${prefix}help to see all available commands\n\n🧘 Did you mean: ${prefix}${closestMatch}?`);
+                                        return message.reply(`Command "${matchedCommandRaw}" does not exist, type ${prefix}help to see all available commands\n\n🧘 Did you mean: ${prefix}${closestMatch}?`);
                                 } else {
                                         return message.reply(`The command you are using does not exist, type ${prefix}help to see all available commands`);
                                 }
