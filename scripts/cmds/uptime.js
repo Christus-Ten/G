@@ -12,6 +12,7 @@ module.exports = {
     author: "ArYAN",
     countDown: 5,
     role: 0,
+    nixPrefix: true,
     shortDescription: "Check bot and system status with image",
     category: "info"
   },
@@ -38,22 +39,22 @@ module.exports = {
     const canvas = createCanvas(800, 500);
     const ctx = canvas.getContext('2d');
 
-    // Background
+    
     ctx.fillStyle = '#1a1a1a';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Border
-    ctx.strokeStyle = '#FF8C00'; // Dark Orange
+    
+    ctx.strokeStyle = '#FF8C00'; 
     ctx.lineWidth = 10;
     ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
 
-    // Title
+    
     ctx.fillStyle = '#FF8C00';
     ctx.font = 'bold 45px Arial';
     ctx.textAlign = 'center';
     ctx.fillText('BOT SYSTEM STATUS', 400, 80);
 
-    // Stats
+    
     ctx.textAlign = 'left';
     ctx.font = '30px Arial';
     ctx.fillStyle = '#ffffff';
@@ -79,14 +80,14 @@ module.exports = {
       ctx.fillText(stat, startX, startY + (index * lineSpacing));
     });
 
-    // Body message area
+    
     ctx.fillStyle = 'rgba(255, 140, 0, 0.1)';
     ctx.fillRect(startX - 20, 100, 680, 5);
 
     const buffer = canvas.toBuffer('image/png');
     fs.writeFileSync(imgPath, buffer);
 
-    const bodyMsg = `BOT STATUS\nUptime: ${botUptime}\nSystem Uptime: ${systemUptimeFormatted}\nCPU: ${cpuInfo.model.split(' ')[0]} ${cpuInfo.model.split(' ')[1]}\nRAM: ${usedMemory}GB / ${totalMemory}GB\nMemory: ${((usedMemory / totalMemory) * 100).toFixed(2)}%\nVersion: ${version}\nPing: ${ping}ms`;
+    const bodyMsg = `Uptime: ${botUptime}\nSystem Uptime: ${systemUptimeFormatted}\nCPU: ${cpuInfo.model.split(' ')[0]} ${cpuInfo.model.split(' ')[1]}\nRAM: ${usedMemory}GB / ${totalMemory}GB\nMemory: ${((usedMemory / totalMemory) * 100).toFixed(2)}%\nVersion: ${version}\nPing: ${ping}ms`;
 
     return api.sendMessage({
       body: bodyMsg,
