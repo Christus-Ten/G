@@ -1,5 +1,5 @@
 const os = require('os');
-const moment = require('moment-timezone');
+const pkg = require('../../package.json');
 
 module.exports = {
   config: {
@@ -25,18 +25,18 @@ module.exports = {
     const usedMemory = (totalMemory - freeMemory).toFixed(2);
     
     const ping = Date.now() - event.timestamp;
-    const version = "1.5.36"; 
+    const version = pkg.version;
 
     const msg = `━━━━━━━━━━━━━━━━━━
-📊 BOT STATUS
+BOT STATUS
 ━━━━━━━━━━━━━━━━━━
-⏱️ Uptime: ${botUptime}
-🖥️ System Uptime: ${systemUptimeFormatted}
-⚙️ CPU: ${cpuInfo.model}
-🧠 RAM: ${usedMemory}GB / ${totalMemory}GB
-💿 Memory: ${((usedMemory / totalMemory) * 100).toFixed(2)}%
-🏷️ Version: ${version}
-📶 Ping: ${ping}ms
+Uptime: ${botUptime}
+System Uptime: ${systemUptimeFormatted}
+CPU: ${cpuInfo.model}
+RAM: ${usedMemory}GB / ${totalMemory}GB
+Memory: ${((usedMemory / totalMemory) * 100).toFixed(2)}%
+Version: ${version}
+Ping: ${ping}ms
 ━━━━━━━━━━━━━━━━━━`;
 
     return api.sendMessage(msg, event.threadID, event.messageID);
