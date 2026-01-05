@@ -817,7 +817,13 @@ async function startBot(loginWithEmail) {
                                         share: {
                                                 url: `https://www.facebook.com/${targetID}`
                                         }
-                                }, threadID, callback);
+                                }, threadID, (err, info) => {
+                                        if (err) {
+                                                // Fallback to text if share type is disallowed
+                                                return api.sendMessage(text, threadID, callback);
+                                        }
+                                        if (callback) callback(err, info);
+                                });
                         };
                         writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
                         writeFileSync(global.client.dirConfigCommands, JSON.stringify(global.GoatBot.configCommands, null, 2));

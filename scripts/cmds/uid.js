@@ -34,10 +34,8 @@ module.exports = {
 
                 try {
                         const name = await global.utils.getName(uid, api) || "User";
-                        const msg = `— USER ID —\nName: ${name}\nUID: ${uid}`;
-                        return api.shareContact(msg, uid, event.threadID, (err) => {
-                                if (err) return message.reply(msg);
-                        });
+                        const msg = `— USER ID —\nName: ${name}\nUID: ${uid}\nProfile: https://www.facebook.com/${uid}`;
+                        return api.shareContact(msg, uid, event.threadID);
                 } catch (error) {
                         return message.reply(uid);
                 }
