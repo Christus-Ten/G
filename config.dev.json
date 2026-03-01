@@ -17,12 +17,12 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "100001611578438"
+    "61580333625022"
   ],
   "whiteListMode": {
     "enable": true,
     "whiteListIds": [
-      "100001611578438"
+      "61580333625022"
     ]
   },
   "whiteListModeThread": {
